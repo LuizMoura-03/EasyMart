@@ -21,7 +21,7 @@ public class ProdutoDTO {
     private Integer estoque;
 
     @NotNull(message = "A categoria é obirgatoria.")
-    private String Categoria;
+    private String categoria;
 
     public ProdutoDTO() {}
 
@@ -31,7 +31,7 @@ public class ProdutoDTO {
         this.descricao = descricao;
         this.preco = preco;
         this.estoque = estoque;
-        Categoria = categoria;
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -75,10 +75,10 @@ public class ProdutoDTO {
     }
 
     public String getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
     public void setCategoria(String categoria) {
-        Categoria = categoria;
+        categoria = categoria;
     }
 }
