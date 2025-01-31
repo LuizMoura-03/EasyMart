@@ -1,13 +1,11 @@
 package com.desafio.EasyMart.controllers;
 
 import com.desafio.EasyMart.dtos.ProdutoDTO;
+import com.desafio.EasyMart.enums.CategoriaProduto;
 import com.desafio.EasyMart.models.ProdutoModel;
 import com.desafio.EasyMart.services.ProdutoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +50,33 @@ public class ProdutoController {
             return ResponseEntity.ok(produtoDTO);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<ProdutoDTO> salvar(@RequestBody ProdutoDTO produtoDTO) {
+        try {
+            CategoriaProduto categoriaProduto = CategoriaProduto.valueOf(produtoDTO.getCategoria());
+            ProdutoModel produtoModel = new ProdutoModel(
+                    produtoDTO.getId(),
+                    produtoDTO.getNome(),
+                    produtoDTO.getDescricao(),
+                    produtoDTO.getPreco(),
+                    produtoDTO.getEstoque(),
+                    categoriaProduto );
+
+            ProdutoModel produtoSalvo = produtoService.salvar(produtoModel);
+            ProdutoDTO produtoSalvoDTO = new ProdutoDTO(
+                    produtoSalvo.getId(),
+                    produtoSalvo.getNome(),
+                    produtoSalvo.getDescricao(),
+                    produtoSalvo.getPreco(),
+                    produtoSalvo.getEstoque(),
+                    produtoSalvo.getCategoria().toString()
+            );
+            return ResponseEntity.ok(produtoSalvoDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
 }

@@ -2,10 +2,7 @@ package com.desafio.EasyMart.models;
 
 import com.desafio.EasyMart.enums.CategoriaProduto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "product")
@@ -22,6 +19,10 @@ public class ProdutoModel {
     @Size(max = 500, message = "A descrição não pode ultrapassar os 500 carateres.")
     private String descricao;
 
+    @NotNull(message = "O preço é obrigatório.")
+    @DecimalMin(value = "0.01", message = "O preço deve ser maior que 0.")
+    private Double preco;
+
     @NotNull(message = "A quantidade em estoque é obrigatoria.")
     @Min(value = 0, message = "A quantidade em estoque deve ser maior ou igaul a 0.")
     private Integer estoque;
@@ -32,10 +33,11 @@ public class ProdutoModel {
 
     public ProdutoModel() {}
 
-    public ProdutoModel(Long id, String nome, String descricao, Integer estoque, CategoriaProduto categoria) {
+    public ProdutoModel(Long id, String nome, String descricao,Double preco, Integer estoque, CategoriaProduto categoria) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.preco = preco;
         this.estoque = estoque;
         this.categoria = categoria;
     }
@@ -63,6 +65,15 @@ public class ProdutoModel {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public Double getPreco() { // Novo método
+        return preco;
+    }
+
+    public void setPreco(Double preco) { // Novo método
+        this.preco = preco;
+    }
+
 
     public Integer getEstoque() {
         return estoque;
