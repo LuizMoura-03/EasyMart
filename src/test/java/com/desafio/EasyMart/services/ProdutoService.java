@@ -29,6 +29,22 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
+    public ProdutoModel atualizar(Long id, ProdutoModel produtoAtualizado) {
+        Optional<ProdutoModel> produtoExistente = produtoRepository.findById(id);
+
+        if (produtoExistente.isEmpty()) {
+            throw new IllegalArgumentException("Produto com o ID fornecido não existe.");
+        }
+
+        ProdutoModel produto = produtoExistente.get();
+        produto.setNome(produtoAtualizado.getNome());
+        produto.setDescricao(produtoAtualizado.getDescricao());
+        produto.setEstoque(produtoAtualizado.getEstoque());
+
+        return produtoRepository.save(produto);
+
+    }
+
     public void deletar(Long id) {
         produtoRepository.deleteById(id);
     }

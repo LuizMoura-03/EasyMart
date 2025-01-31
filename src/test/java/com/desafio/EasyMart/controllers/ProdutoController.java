@@ -62,7 +62,7 @@ public class ProdutoController {
                     produtoDTO.getDescricao(),
                     produtoDTO.getPreco(),
                     produtoDTO.getEstoque(),
-                    categoriaProduto );
+                    categoriaProduto);
 
             ProdutoModel produtoSalvo = produtoService.salvar(produtoModel);
             ProdutoDTO produtoSalvoDTO = new ProdutoDTO(
