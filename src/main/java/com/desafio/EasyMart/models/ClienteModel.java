@@ -27,19 +27,24 @@ public class ClienteModel {
     @Email(message = "O email deve ser valido.")
     private String email;
 
+    @NotBlank(message = "O endereço é obrigatório.")
+    private String endereco;
+
     public ClienteModel() {}
 
-    public ClienteModel(Long id, String nome, String cpf, String email) {
+    public ClienteModel(Long id, String nome, String cpf, String email, String endereco) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
+        this.endereco = endereco;
     }
 
     public ClienteModel(String nome, String cpf, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
+
     }
 
     public Long getId() {
@@ -72,5 +77,13 @@ public class ClienteModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }
