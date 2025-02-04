@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -42,10 +45,10 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoDTO> salvar(@RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<List< ProdutoDTO>> salvar(@RequestBody ProdutoDTO produtoDTO) {
         try {
             ProdutoDTO produtoSalvo = produtoService.salvar(produtoDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonList(produtoSalvo));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }

@@ -88,7 +88,7 @@ public class ProdutoService {
                 return produtoModel;
     }
 
-    // Método para validar e converter a categoria
+    // Método para va agora a poucolidar e converter a categoria
     private CategoriaProduto toEnum(String categoria) {
         try {
             return CategoriaProduto.valueOf(categoria.toUpperCase());
