@@ -3,6 +3,7 @@ package com.desafio.EasyMart.controllers;
 import com.desafio.EasyMart.dtos.ProdutoDTO;
 import com.desafio.EasyMart.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDTO> salvar(@RequestBody ProdutoDTO produtoDTO) {
         try {
             ProdutoDTO produtoSalvo = produtoService.salvar(produtoDTO);
-            return ResponseEntity.ok(produtoSalvo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
