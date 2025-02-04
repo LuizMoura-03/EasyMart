@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-
 public class ProdutoService {
 
     @Autowired
@@ -30,6 +29,7 @@ public class ProdutoService {
     }
 
     public ProdutoDTO salvar(ProdutoDTO produtoDTO) {
+        validarProdutoUnico(produtoDTO.getNome());
         ProdutoModel produtoModel = toModel(produtoDTO);
         ProdutoModel produtoSalvo = produtoRepository.save(produtoModel);
         return toDTO(produtoSalvo);
@@ -57,12 +57,12 @@ public class ProdutoService {
     // Métodos privados para reutilização
     private ProdutoModel buscarProdutoPorId(Long id) {
         return produtoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto com o ID fornecido não existe."));
+                .orElseThrow(() -> new IllegalArgumentException("Produto com o ID" + id + "fornecido não existe."));
     }
 
     private void validarProdutoUnico(String nome) {
         if (produtoRepository.existsByNome(nome)) {
-            throw new IllegalArgumentException("Produto com o mesmo nome já existe.");
+            throw new IllegalArgumentException("já existe um produto com o mesmo nome: " + nome);
         }
     }
 
