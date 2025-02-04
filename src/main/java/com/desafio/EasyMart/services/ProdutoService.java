@@ -79,14 +79,13 @@ public class ProdutoService {
     }
 
     private ProdutoModel toModel(ProdutoDTO produtoDTO) {
-        return new ProdutoModel(
-                produtoDTO.getId(),
-                produtoDTO.getNome(),
-                produtoDTO.getDescricao(),
-                produtoDTO.getPreco(),
-                produtoDTO.getEstoque(),
-                CategoriaProduto.valueOf(produtoDTO.getCategoria())
-        );
+        ProdutoModel produtoModel = new ProdutoModel();
+                produtoModel.setNome(produtoDTO.getNome());
+                produtoModel.setDescricao(produtoDTO.getDescricao());
+                produtoModel.setPreco(produtoDTO.getPreco());
+                produtoModel.setEstoque(produtoDTO.getEstoque());
+                produtoModel.setCategoria(toEnum(produtoDTO.getCategoria()));
+                return produtoModel;
     }
 
     // Método para validar e converter a categoria
@@ -97,6 +96,5 @@ public class ProdutoService {
             throw new IllegalArgumentException("Categoria inválida: " + categoria);
         }
     }
-
 }
 
