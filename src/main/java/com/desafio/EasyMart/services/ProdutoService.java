@@ -88,5 +88,15 @@ public class ProdutoService {
                 CategoriaProduto.valueOf(produtoDTO.getCategoria())
         );
     }
+
+    // Método para validar e converter a categoria
+    private CategoriaProduto toEnum(String categoria) {
+        try {
+            return CategoriaProduto.valueOf(categoria.toUpperCase());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Categoria inválida: " + categoria);
+        }
+    }
+
 }
 
