@@ -35,6 +35,12 @@ public class ProdutoService {
         return toDTO(produtoSalvo);
     }
 
+    public List<ProdutoDTO> salvarTodos(List<ProdutoDTO> produtosDTO) {
+        return produtosDTO.stream()
+                .map(this::salvar) // Reutiliza o método salvar para cada produto
+                .collect(Collectors.toList());
+    }
+
     public ProdutoDTO atualizar(Long id, ProdutoDTO produtoDTO) {
         ProdutoModel produtoExistente = buscarProdutoPorId(id);
         ProdutoModel produtoAtualizado = toModel(produtoDTO);
@@ -54,7 +60,6 @@ public class ProdutoService {
         produtoRepository.delete(produto);
     }
 
-    // Métodos privados para reutilização
     private ProdutoModel buscarProdutoPorId(Long id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto com o ID" + id + "fornecido não existe."));
@@ -87,8 +92,7 @@ public class ProdutoService {
                 produtoModel.setCategoria(toEnum(produtoDTO.getCategoria()));
                 return produtoModel;
     }
-
-    // Método para va agora a poucolidar e converter a categoria
+    
     private CategoriaProduto toEnum(String categoria) {
         try {
             return CategoriaProduto.valueOf(categoria.toUpperCase());

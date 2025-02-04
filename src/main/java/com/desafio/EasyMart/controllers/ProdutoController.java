@@ -45,10 +45,20 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<List< ProdutoDTO>> salvar(@RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity< ProdutoDTO> salvar(@RequestBody ProdutoDTO produtoDTO) {
         try {
             ProdutoDTO produtoSalvo = produtoService.salvar(produtoDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonList(produtoSalvo));
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/lista")
+    public ResponseEntity<List<ProdutoDTO>> SalvarLista(@RequestBody List<ProdutoDTO> produtosDTO) {
+        try {
+            List<ProdutoDTO> produtosSalvos = produtoService.salvarTodos(produtosDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtosSalvos);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
