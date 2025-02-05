@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/produtos")
 public class ProdutoController {
 
-
     private final ProdutoService produtoService;
 
     @Autowired
@@ -44,22 +43,22 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity< ProdutoDTO> salvar(@Valid @RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<?> salvar(@Valid @RequestBody ProdutoDTO produtoDTO) {
         try {
             ProdutoDTO produtoSalvo = produtoService.salvar(produtoDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/lista")
-    public ResponseEntity<List<ProdutoDTO>> salvarLista(@Valid @RequestBody List<ProdutoDTO> produtosDTO) {
+    public ResponseEntity<?> salvarLista(@Valid @RequestBody List<ProdutoDTO> produtosDTO) {
         try {
             List<ProdutoDTO> produtosSalvos = produtoService.salvarTodos(produtosDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtosSalvos);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -75,6 +74,5 @@ public class ProdutoController {
         produtoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 }
 

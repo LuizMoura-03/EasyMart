@@ -16,11 +16,11 @@ public class ProdutoDTO {
     @DecimalMin(value = "0.01", message = "O preço deve ser maior que 0.")
     private Double preco;
 
-    @NotNull(message = "A quantidade é obirgatoria.")
+    @NotNull(message = "A quantidade é obrigatoria.")
     @Min(value = 0, message = "A quantidade em estoque deve ser maior ou igual a 0.")
     private Integer estoque;
 
-    @NotNull(message = "A categoria é obirgatoria.")
+    @NotNull(message = "A categoria é obrigatoria.")
     private String categoria;
 
     public ProdutoDTO() {}
@@ -79,6 +79,6 @@ public class ProdutoDTO {
     }
 
     public void setCategoria(String categoria) {
-        categoria = categoria;
+        this.categoria = categoria;
     }
 }

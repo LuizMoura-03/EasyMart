@@ -36,6 +36,9 @@ public class ProdutoService {
     }
 
     public List<ProdutoDTO> salvarTodos(List<ProdutoDTO> produtosDTO) {
+        for (ProdutoDTO produtoDTO : produtosDTO) {
+            validarProdutoUnico(produtoDTO.getNome());
+        }
         return produtosDTO.stream()
                 .map(this::salvar) // Reutiliza o método salvar para cada produto
                 .collect(Collectors.toList());
