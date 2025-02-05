@@ -3,17 +3,22 @@ package com.desafio.EasyMart.services;
 import com.desafio.EasyMart.dtos.ClienteDTO;
 import com.desafio.EasyMart.models.ClienteModel;
 import com.desafio.EasyMart.repositories.ClienteRepository;
+import com.desafio.EasyMart.repositories.ComprasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ComprasRepository comprasRepository;
 
     public ClienteModel salvarCliente (ClienteDTO clienteDTO) {
         if (clienteRepository.existsByCpf(clienteDTO.getCpf())) {
@@ -35,6 +40,24 @@ public class ClienteService {
 
     public Optional<ClienteModel> buscarPorId(Long id) {
         return clienteRepository.findById(id);
+    }
+
+    public Optional<ClienteModel> buscarPorCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf);
+    }
+
+    public List<ClienteDTO> listarClientesComCompras() {
+        List<ClienteModel> clientes = clienteRepository.findAll();
+        return clientes.stream()
+                .filter(cliente -> !comprasRepository.findByCliente(cliente).isEmpty())
+                .map(cliente -> new ClienteDTO(
+                        cliente.getId(),
+                        cliente.getNome(),
+                        cliente.getEmail(),
+                        cliente.getCpf(),
+                        cliente.getEndereco()
+                ))
+                .collect(Collectors.toList());
     }
 
     public ClienteDTO atualizarCliente(String cpf, ClienteDTO clienteDTO) {

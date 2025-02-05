@@ -39,6 +39,12 @@ public class ClienteController {
         return ResponseEntity.ok(produtosComprados);
     }
 
+    @GetMapping("/clientes/compras")
+    public ResponseEntity<List<ClienteDTO>> listarClientesComCompras() {
+        List<ClienteDTO> clientes = clienteService.listarClientesComCompras();
+        return ResponseEntity.ok(clientes);
+    }
+
     @PutMapping("/{cpf}")
     public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable String cpf, @RequestBody ClienteDTO clienteDTO) {
         try {

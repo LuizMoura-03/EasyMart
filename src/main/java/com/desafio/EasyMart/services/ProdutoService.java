@@ -50,9 +50,22 @@ public class ProdutoService {
 
     }
 
+    public ProdutoDTO atualizarEstoque(Long id, int quantidade) {
+        ProdutoModel produto = buscarProdutoPorId(id);
+        produto.setEstoque(produto.getEstoque() + quantidade);
+        ProdutoModel produtoAtualizado = produtoRepository.save(produto);
+        return toDTO(produtoAtualizado);
+    }
+
     public List<ProdutoDTO> listarProdutosComEstoqueMaiorQue(int quantidade) {
         return produtoRepository.findByEstoqueGreaterThan(quantidade).stream()
                 .map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public List<ProdutoDTO> listarPorCategoria(CategoriaProduto categoria) {
+        return produtoRepository.findByCategoria(categoria).stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
     public void deletar(Long id) {
@@ -92,7 +105,7 @@ public class ProdutoService {
                 produtoModel.setCategoria(toEnum(produtoDTO.getCategoria()));
                 return produtoModel;
     }
-    
+
     private CategoriaProduto toEnum(String categoria) {
         try {
             return CategoriaProduto.valueOf(categoria.toUpperCase());
