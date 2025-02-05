@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -56,7 +54,7 @@ public class ProdutoController {
     }
 
     @PostMapping("/lista")
-    public ResponseEntity<List<ProdutoDTO>> SalvarLista(@Valid @RequestBody List<ProdutoDTO> produtosDTO) {
+    public ResponseEntity<List<ProdutoDTO>> salvarLista(@Valid @RequestBody List<ProdutoDTO> produtosDTO) {
         try {
             List<ProdutoDTO> produtosSalvos = produtoService.salvarTodos(produtosDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtosSalvos);
